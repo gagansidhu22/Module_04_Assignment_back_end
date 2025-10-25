@@ -49,7 +49,7 @@ describe("Loan Application API", () => {
     expect(res.body.data.amount).toBe(8000);
   });
 
-  // DELETE loan
+  // DELETE Loan
   it("should delete a loan", async () => {
     const res = await request(app).delete("/api/v1/loans/2");
     expect(res.status).toBe(200);
