@@ -16,5 +16,16 @@
   "bugs": {
     "url": "https://github.com/gagansidhu22/Module_04_Assignment_back_end/issues"
   },
-  "homepage": "https://github.com/gagansidhu22/Module_04_Assignment_back_end#readme"
+  "homepage": "https://github.com/gagansidhu22/Module_04_Assignment_back_end#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.4",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "morgan": "^1.10.1"
+  }
 }
