@@ -1,17 +1,20 @@
 {
   "name": "module_04_assignment_back_end",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Loan Application Management API - Assignment 04 (Back End)",
+  "main": "dist/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "jest --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gagansidhu22/Module_04_Assignment_back_end.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Gagandeep Kaur",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/gagansidhu22/Module_04_Assignment_back_end/issues"
@@ -19,8 +22,13 @@
   "homepage": "https://github.com/gagansidhu22/Module_04_Assignment_back_end#readme",
   "devDependencies": {
     "@types/express": "^5.0.4",
+    "@types/jest": "^30.0.0",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.9.1",
+    "@types/supertest": "^6.0.3",
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.5",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3"
   },
