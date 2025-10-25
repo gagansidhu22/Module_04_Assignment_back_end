@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllLoans, getLoanById, createLoan, updateLoan, deleteLoan } from "../controllers/loanController";
+import { getAllLoans, getLoanById, createLoan, updateLoan, deleteLoan } from "../controllers/loanControllers";
 
 const router = express.Router();
 

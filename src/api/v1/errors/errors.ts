@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from "../../../constants/httpConstants";
+import { HTTP_STATUS } from "../../../constants/httpconstants";
 
 /**
  * Base error class for application errors.
