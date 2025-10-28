@@ -1,8 +1,12 @@
-import express from "express";
-import { setUserRole } from "../controllers/adminController";
+import { Router } from "express";
+import { setUserRole, getUserClaims } from "../controllers/adminController";
 
-const router = express.Router();
+const router = Router();
 
+// Set custom claim (role)
 router.post("/setRole", setUserRole);
+
+// Get custom claim (role)
+router.get("/getClaims/:uid", getUserClaims);
 
 export default router;

@@ -22,3 +22,23 @@ export const setUserRole = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getUserClaims = async (req: Request, res: Response) => {
+  try {
+    const { uid } = req.params;
+
+    const user = await admin.auth().getUser(uid);
+
+    res.status(200).json({
+      uid: user.uid,
+      email: user.email,
+      claims: user.customClaims || {},
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      message: "Error retrieving user claims",
+      error: error.message,
+    });
+  }
+};
+
