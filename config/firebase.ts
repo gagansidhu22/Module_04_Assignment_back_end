@@ -1,7 +1,9 @@
 import admin from "firebase-admin";
 import dotenv from "dotenv";
+
 dotenv.config();
 
+// Prevent reinitialization in test environments
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert({
@@ -14,4 +16,8 @@ if (!admin.apps.length) {
   });
 }
 
+// ✅ Export the auth instance directly for cleaner imports and easy mocking
+export const auth = admin.auth();
+
+// Optional: export admin if you need Firestore, Storage, etc. elsewhere
 export default admin;
