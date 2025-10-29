@@ -1,44 +1,34 @@
-import admin from "../../../../config/firebase";
+// src/api/v1/controllers/adminController.ts
 import { Request, Response } from "express";
+import admin from "../../../../config/firebase";
 
+// ✅ Set custom role for a user (Admin only)
 export const setUserRole = async (req: Request, res: Response) => {
   try {
     const { uid, role } = req.body;
 
     if (!uid || !role) {
-      return res.status(400).json({ message: "UID and role are required." });
+      return res.status(400).json({
+        success: false,
+        message: "User ID and role are required",
+      });
     }
 
-    // Set the custom claim (role)
-    await admin.auth().setCustomUserClaims(uid, { role });
+    const auth = admin.auth();
 
-    res.status(200).json({
-      message: `Role '${role}' assigned successfully to user '${uid}'.`,
+    await auth.setCustomUserClaims(uid, { role });
+
+    return res.status(200).json({
+      success: true,
+      message: `Role '${role}' set successfully for user ${uid}`,
     });
   } catch (error: any) {
-    res.status(400).json({
+    console.error("Error setting role:", error.message);
+
+    return res.status(400).json({
+      success: false,
       message: "Error setting role",
       error: error.message,
     });
   }
 };
-
-export const getUserClaims = async (req: Request, res: Response) => {
-  try {
-    const { uid } = req.params;
-
-    const user = await admin.auth().getUser(uid);
-
-    res.status(200).json({
-      uid: user.uid,
-      email: user.email,
-      claims: user.customClaims || {},
-    });
-  } catch (error: any) {
-    res.status(400).json({
-      message: "Error retrieving user claims",
-      error: error.message,
-    });
-  }
-};
-

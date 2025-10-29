@@ -1,19 +1,25 @@
 import { Request, Response } from "express";
-import admin from "../../../../config/firebase";
+import admin from "../../../../config/firebase"; // adjust path if needed
 
-// Controller: Get user details by UID
-export const getUserDetails = async (req: Request, res: Response): Promise<void> => {
+// ✅ Get user details and custom claims
+export const getUserDetails = async (req: Request, res: Response) => {
   try {
-    const user = await admin.auth().getUser(req.params.uid);
+    const { uid } = req.params;
 
-    res.status(200).json({
+    if (!uid) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const user = await admin.auth().getUser(uid);
+
+    return res.status(200).json({
       uid: user.uid,
       email: user.email,
       claims: user.customClaims || {},
     });
   } catch (error: any) {
-    res.status(400).json({
-      message: "Error fetching user",
+    return res.status(400).json({
+      message: "Error fetching user details",
       error: error.message,
     });
   }

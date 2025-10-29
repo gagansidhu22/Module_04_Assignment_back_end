@@ -1,18 +1,19 @@
+// src/app.ts
 import express from "express";
-import morgan from "morgan";
 import loanRoutes from "./api/v1/routes/loanRoutes";
+import userRoutes from "./api/v1/routes/userRoutes"; // if you have user routes
 
 const app = express();
 
 app.use(express.json());
-app.use(morgan("dev"));
 
-// ✅ Root route
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "Loan Application API is running 🚀" });
-});
+// Mount routes
+app.use("/api/v1", loanRoutes);
+app.use("/api/user", userRoutes); // optional
 
-// ✅ Versioned API route
-app.use("/api/v1/loans", loanRoutes);
+// Start server (for dev/testing)
+if (process.env.NODE_ENV !== "test") {
+  app.listen(5000, () => console.log("Server running on port 5000"));
+}
 
 export default app;

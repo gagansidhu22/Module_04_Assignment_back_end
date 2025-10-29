@@ -1,14 +1,24 @@
 import request from "supertest";
 import app from "../src/app";
 
-describe("Loan Application API", () => {
-  // Root route
-  it("should return a welcome message", async () => {
-    const res = await request(app).get("/");
-    expect(res.status).toBe(200);
-    expect(res.body.message).toBe("Loan Application API is running 🚀");
-  });
+jest.mock("firebase-admin", () => ({
+  initializeApp: jest.fn(),
+  apps: [],
+  credential: {
+    cert: jest.fn(() => ({})),
+  },
+  auth: jest.fn(() => ({
+    setCustomUserClaims: jest.fn(),
+  })),
+}));
 
+describe("Loan Application API", () => {
+  it("should return a welcome message", async () => {
+    const res = await request(app).get("/api/v1/"); // full mounted path
+    expect(res.status).toBe(200);
+    expect(res.body.message).toBe("Loan Application API is running 🚀"); // exact match
+  });
+  
   // GET all loans
   it("should return all loans", async () => {
     const res = await request(app).get("/api/v1/loans");
