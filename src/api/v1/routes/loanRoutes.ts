@@ -1,43 +1,65 @@
 import { Router } from "express";
 import authenticate from "../middleware/authenticate";
 import isAuthorized from "../middleware/authorize";
-import { welcome, createLoan, reviewLoan, getAllLoans, approveLoan } from "../controllers/loanControllers";
+import {
+  createLoan,
+  reviewLoan,
+  getAllLoans,
+  getLoanById,
+  approveLoan,
+  deleteLoan
+} from "../controllers/loanControllers";
 
 const router = Router();
 
-// 🟢 Welcome route
-router.get("/", welcome);
-
-// 👤 USER: Create new loan
+//Create new loan
 router.post(
-  "/loans",
+  "/",
   authenticate,
-  isAuthorized({ hasRole: ["user"] }), // ✅ correct usage
+  isAuthorized({ hasRole: ["user"] }),
   createLoan
 );
 
-// 🟠 OFFICER: Review loan
-router.put(
-  "/loans/:id/review",
-  authenticate,
-  isAuthorized({ hasRole: ["officer"] }), // ✅ correct usage
-  reviewLoan
-);
-
-// 🟣 OFFICER + MANAGER: Get all loans
+// Get all loans
 router.get(
-  "/loans",
+  "/",
   authenticate,
-  isAuthorized({ hasRole: ["officer", "manager"] }), // ✅ correct usage
+  isAuthorized({ hasRole: ["officer", "manager"] }),
   getAllLoans
 );
 
-// 🔵 MANAGER: Approve loan
-router.put(
-  "/loans/:id/approve",
+//Get a loan by ID
+router.get(
+  "/:id",
   authenticate,
-  isAuthorized({ hasRole: ["manager"] }), // ✅ correct usage
+  isAuthorized({ hasRole: ["officer", "manager"] }),
+  getLoanById
+);
+
+// Review loan
+router.put(
+  "/:id/review",
+  authenticate,
+  isAuthorized({ hasRole: ["officer"] }),
+  reviewLoan
+);
+
+// Approve loan
+router.put(
+  "/:id/approve",
+  authenticate,
+  isAuthorized({ hasRole: ["manager"] }),
   approveLoan
 );
 
+//Delete loan
+router.delete(
+  "/:id",
+  authenticate,
+  isAuthorized({ hasRole: ["manager"] }),
+  deleteLoan
+);
+
 export default router;
+
+

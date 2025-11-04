@@ -1,8 +1,8 @@
 // src/api/v1/controllers/adminController.ts
 import { Request, Response } from "express";
-import admin from "../../../../config/firebase";
+import {admin} from "../../../../config/firebase";
 
-// ✅ Set custom role for a user (Admin only)
+// Set custom role for a user (Admin only)
 export const setUserRole = async (req: Request, res: Response) => {
   try {
     const { uid, role } = req.body;

@@ -1,23 +1,16 @@
+// config/firebase.ts
 import admin from "firebase-admin";
-import dotenv from "dotenv";
+import serviceAccount from "../service-key.json";
 
-dotenv.config();
-
-// Prevent reinitialization in test environments
+// Prevent error during reloads
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID || "demo-project",
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL || "demo@example.com",
-      privateKey:
-        process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n") ||
-        "-----BEGIN PRIVATE KEY-----FAKE-----END PRIVATE KEY-----",
-    }),
+    credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
   });
 }
 
-// ✅ Export the auth instance directly for cleaner imports and easy mocking
-export const auth = admin.auth();
+// Export initialized services
+const auth = admin.auth();
+const db = admin.firestore();
 
-// Optional: export admin if you need Firestore, Storage, etc. elsewhere
-export default admin;
+export { admin, auth, db };

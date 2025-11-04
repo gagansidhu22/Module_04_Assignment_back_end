@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import admin from "../../../../config/firebase"; // adjust path if needed
+import { admin } from "../../../../config/firebase";
+// adjust path if needed
 
-// ✅ Get user details and custom claims
+// Get user details and custom claims
 export const getUserDetails = async (req: Request, res: Response) => {
   try {
     const { uid } = req.params;

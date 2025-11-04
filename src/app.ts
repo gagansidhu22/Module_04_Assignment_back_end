@@ -5,13 +5,14 @@ import { consoleLogger, accessLogger, errorLogger } from "./api/v1/middleware/lo
 import errorHandler from "./api/v1/middleware/errorHandler";
 import loanRoutes from "./api/v1/routes/loanRoutes";
 import userRoutes from "./api/v1/routes/userRoutes";
+import adminRoutes from "./api/v1/routes/adminRoutes"
 
 dotenv.config();
 
 const app = express();
 
 /**
- * ✅ Middleware integration order
+ * Middleware integration order
  * 1. Logging (console + file)
  * 2. Body parsing (JSON)
  * 3. Routes (with auth + authorization inside routes if required)
@@ -19,27 +20,22 @@ const app = express();
  * 5. Global error handler (final catch)
  */
 
-// 1️⃣ Logging middleware
+// Logging middleware
 app.use(consoleLogger);
 app.use(accessLogger);
 
-// 2️⃣ Body parsing middleware
+// Body parsing middleware
 app.use(express.json());
 
-// 3️⃣ API routes
+// API routes
 app.use("/api/v1/loans", loanRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
-// 4️⃣ Error logger (captures 4xx/5xx)
+// Error logger (captures 4xx/5xx)
 app.use(errorLogger);
 
-// 5️⃣ Global error handler
+// Global error handler
 app.use(errorHandler);
-
-// 6️⃣ Start server (for local development)
-if (process.env.NODE_ENV !== "test") {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
-}
 
 export default app;

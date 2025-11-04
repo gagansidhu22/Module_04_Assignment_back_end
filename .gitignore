@@ -5,4 +5,5 @@ dist/
 logs/
 *.log
 
-config/service-key.json
+service-key.json
+
