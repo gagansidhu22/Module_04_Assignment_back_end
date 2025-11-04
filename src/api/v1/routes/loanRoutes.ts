@@ -1,21 +1,65 @@
-import express from "express";
-import { getAllLoans, getLoanById, createLoan, updateLoan, deleteLoan } from "../controllers/loanController";
+import { Router } from "express";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
+import {
+  createLoan,
+  reviewLoan,
+  getAllLoans,
+  getLoanById,
+  approveLoan,
+  deleteLoan
+} from "../controllers/loanControllers";
 
-const router = express.Router();
+const router = Router();
 
-// GET all loans
-router.get("/", getAllLoans);
+//Create new loan
+router.post(
+  "/",
+  authenticate,
+  isAuthorized({ hasRole: ["user"] }),
+  createLoan
+);
 
-// GET loan by ID
-router.get("/:id", getLoanById);
+// Get all loans
+router.get(
+  "/",
+  authenticate,
+  isAuthorized({ hasRole: ["officer", "manager"] }),
+  getAllLoans
+);
 
-// POST create new loan
-router.post("/", createLoan);
+//Get a loan by ID
+router.get(
+  "/:id",
+  authenticate,
+  isAuthorized({ hasRole: ["officer", "manager"] }),
+  getLoanById
+);
 
-// PUT update loan
-router.put("/:id", updateLoan);
+// Review loan
+router.put(
+  "/:id/review",
+  authenticate,
+  isAuthorized({ hasRole: ["officer"] }),
+  reviewLoan
+);
 
-// DELETE loan
-router.delete("/:id", deleteLoan);
+// Approve loan
+router.put(
+  "/:id/approve",
+  authenticate,
+  isAuthorized({ hasRole: ["manager"] }),
+  approveLoan
+);
+
+//Delete loan
+router.delete(
+  "/:id",
+  authenticate,
+  isAuthorized({ hasRole: ["manager"] }),
+  deleteLoan
+);
 
 export default router;
+
+

@@ -1,25 +1,37 @@
 {
-    "compilerOptions": {
-        "target": "ES2020",
-        "module": "commonjs",
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "rootDir": "./src",
-        "outDir": "./dist",
-        "resolveJsonModule": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "strictPropertyInitialization": true,
-        "noImplicitThis": true,
-        "noUnusedLocals": true,
-        "alwaysStrict": true,
-        "baseUrl": "./",
-        "paths": {
-            "*": ["*"]
-        }
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "./",
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "alwaysStrict": true,
+    "baseUrl": "./",
+    "paths": {
+      "*": ["*"]
     },
-    "include": ["src/**/*", "test/**/*", "config/**/*"],
-    "exclude": ["node_modules", "dist"]
+    "types": ["node", "jest"],              // ✅ Enables Jest & Node globals
+    "allowSyntheticDefaultImports": true,   // ✅ Allows default import compatibility
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "useUnknownInCatchVariables": true
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*",   // ✅ corrected folder name (was 'test')
+    "config/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
